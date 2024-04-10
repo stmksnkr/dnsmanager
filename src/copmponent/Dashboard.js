@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
-
+import Modal from 'react-modal'
 function Dashboard() {
     const [domains, setDomains] = useState([]);
     const [newDomain, setNewDomain] = useState('');
