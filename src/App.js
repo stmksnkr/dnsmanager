@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import DomainDashboard from './copmponent/DomainDashboard';
 import Dashboard from './copmponent/Dashboard';
@@ -6,7 +5,8 @@ import Dashboard from './copmponent/Dashboard';
 function App() {
   return (
     <div className="App">
-      <Dashboard/>
+      <div>Hello</div>
+      {/* <Dashboard/> */}
      {/* <DomainDashboard/> */}
     </div>
   );
