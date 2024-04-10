@@ -5,8 +5,8 @@ import Dashboard from './copmponent/Dashboard';
 function App() {
   return (
     <div className="App">
-      <div>Hello</div>
-      {/* <Dashboard/> */}
+      
+      <Dashboard/>
      {/* <DomainDashboard/> */}
     </div>
   );
