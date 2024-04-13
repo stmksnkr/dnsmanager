@@ -1,5 +1,8 @@
 import React, { useState ,useEffect } from "react";
 import Modal from "react-modal";
+
+
+
 function Dashboard() {
   const [domains, setDomains] = useState([]);
   const [newDomain, setNewDomain] = useState("");
@@ -21,6 +24,45 @@ function Dashboard() {
       console.error("Error fetching data:", error);
     }
   };
+
+  const handleAdd = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ domainName: newDomain })
+      });
+      
+      if (response.ok) {
+        console.log('Data added successfully');
+        // Optionally update UI or show success message
+      } else {
+        console.error('Failed to add data');
+        // Handle error or show error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle network errors
+    }
+  };
+
+  const deleteHostedZone = async (hostedZoneId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/delete/${hostedZoneId}`, {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+    
+
+  
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -78,7 +120,15 @@ function Dashboard() {
   return (
     <div className="container">
       <h1>Domain and DNS Records Dashboard</h1>
-      <button onClick={openModal}>Add Domain</button>
+
+      <input
+          type="text"
+          placeholder="Example.com"
+          value={newDomain}
+          onChange={(e) => setNewDomain(e.target.value)}
+        />
+
+        <button onClick={handleAdd}>Add Domain</button>
       <table className="table">
         <thead>
           <tr>
@@ -97,7 +147,7 @@ function Dashboard() {
               <td>{item.recordType}</td>
               <td>
                 <button onClick={() => editDomain(index)}>Edit</button>
-                <button onClick={() => deleteDomain(index)}>Delete</button>
+                <button onClick={() =>deleteHostedZone(item.Id.split('/').pop())}>Delete</button>
               </td>
             </tr>
           ))}
