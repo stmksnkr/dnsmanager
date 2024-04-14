@@ -57,7 +57,7 @@ function Dashboard() {
   const deleteHostedZone = async (hostedZoneId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/delete/${hostedZoneId}`,
+        `http://localhost:3001/delete/${hostedZoneId}`,
         {
           method: "DELETE",
         }
