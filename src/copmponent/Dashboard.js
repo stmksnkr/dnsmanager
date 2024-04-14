@@ -19,7 +19,7 @@ function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/hostedzones");
+      const response = await fetch("http://localhost:3001/hostedzones");
       const data = await response.json();
       // console.log(data)
       setDomains(data);
@@ -30,7 +30,7 @@ function Dashboard() {
 
   const handleAdd = async () => {
     try {
-      const response = await fetch("http://localhost:3000/create", {
+      const response = await fetch("http://localhost:3001/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function Dashboard() {
   const HandleRecord = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/record?hostedZoneId=${hostedZoneId}`
+        `http://localhost:3001/record?hostedZoneId=${hostedZoneId}`
       );
       const data = await response.json();
       //   console.log(data)
