@@ -1,33 +1,31 @@
-import React ,{ useState , useEffect }from 'react';
+import React, { useEffect, useState } from 'react'
 
-function Records({data}) {
-
-
+const RecordsPage = () => {
+    const hostedZoneId = window.location.pathname.split('/')[2];
+  console.log('records',hostedZoneId);
+  // hostedZoneId.split("/")
   useEffect(() => {
-    handleRecord ();
-  }, []);
+    handleRecord (hostedZoneId);
+  }, [hostedZoneId]);
 
-  
-    console.log(data)
     const [recordstack, setRecordStack] = useState([]);
-    const hostedZoneId = data; 
     
-      const handleRecord = async () => {
+      const handleRecord = async (hostedZoneId) => {
        
         try {
-          const response = await fetch(`http://localhost:3000/record?hostedZoneId=${hostedZoneId}`);
+          const response = await fetch(`http://localhost:3001/record?hostedZoneId=${hostedZoneId}`);
           const data = await response.json();
-        //   console.log(data)
+          console.log(data)
           setRecordStack(data);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       };
+
+      console.log('records',hostedZoneId)
     
-  // Assuming you have some records data
+
   return (
-
-
     <div>
       <table className="table">
         <thead>
@@ -38,7 +36,7 @@ function Records({data}) {
           </tr>
         </thead>
         <tbody>
-          {recordstack.map((item, index) => (
+          {recordstack?.map((item, index) => (
             <tr key={index}>
               <td>{hostedZoneId}</td>
               <td>{item.Name}</td>
@@ -49,7 +47,7 @@ function Records({data}) {
       </table>
       {/* <Link to={`/records/${hostedZoneId }`}>View Details</Link>  */}
     </div>
-  );
+  )
 }
 
-export default Records;
+export default RecordsPage

@@ -10,10 +10,13 @@ function Dashboard() {
   const [recordType, setRecordType] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+
+  const [isDomainAdded, setIsDomainAdded] = useState(false);
+  const [isDomainDeleted, setIsDomainDeleted] = useState(false);
   
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isDomainAdded , isDomainDeleted]);
 
   const fetchData = async () => {
     try {
@@ -35,20 +38,14 @@ function Dashboard() {
         },
         body: JSON.stringify({ domainName: newDomain }),
       });
-
       if (response.ok) {
-        console.log("Data added successfully");
-        const updatedDomains = [...domains];
-        setDomains(updatedDomains);
-
-        // Optionally update UI or show success message
+        setIsDomainAdded(true);
+        setNewDomain('');
       } else {
         console.error("Failed to add data");
-        // Handle error or show error message
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle network errors
     }
   };
 
@@ -60,6 +57,11 @@ function Dashboard() {
           method: "DELETE",
         }
       );
+      if (response.ok) {
+        setIsDomainDeleted(true);
+      } else {
+        console.error("Failed to Delete data");
+      }
       const data = await response.json();
       console.log(data);
     } catch (error) {

@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 // import DomainDashboard from './copmponent/DomainDashboard';
 import Dashboard from './copmponent/Dashboard';
 // import GetDomain from './copmponent/GetDomain';
-import Records from './copmponent/Record';
+import RecordsPage from './copmponent/RecordsPage';
 
 function App() {
   
@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <Routes>
       <Route exact path="/" element={<Dashboard/>} />
-      <Route exact path="/records" element={<Records/>} />
+      <Route exact path="/records/:recordId" element={<RecordsPage/>} />
       </Routes>
     
     
