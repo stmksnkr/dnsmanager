@@ -1,9 +1,9 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-
-
+import { Link} from "react-router-dom";
 
 function Dashboard() {
+  const [recordstack, setRecordStack] = useState([]);
   const [domains, setDomains] = useState([]);
   const [newDomain, setNewDomain] = useState("");
   const [newDNSRecord, setNewDNSRecord] = useState("");
@@ -11,6 +11,8 @@ function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
 
+  const hostedZoneId = 'Z04339233DVBHPD2PI7BG'; 
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -19,6 +21,7 @@ function Dashboard() {
     try {
       const response = await fetch("http://localhost:3000/hostedzones");
       const data = await response.json();
+      // console.log(data)
       setDomains(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -27,42 +30,57 @@ function Dashboard() {
 
   const handleAdd = async () => {
     try {
-      const response = await fetch('http://localhost:3000/create', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/create", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ domainName: newDomain })
+        body: JSON.stringify({ domainName: newDomain }),
       });
-      
+
       if (response.ok) {
-        console.log('Data added successfully');
+        console.log("Data added successfully");
+        const updatedDomains = [...domains];
+        setDomains(updatedDomains);
+
         // Optionally update UI or show success message
       } else {
-        console.error('Failed to add data');
+        console.error("Failed to add data");
         // Handle error or show error message
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       // Handle network errors
     }
   };
 
   const deleteHostedZone = async (hostedZoneId) => {
     try {
-      const response = await fetch(`http://localhost:3000/delete/${hostedZoneId}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(
+        `http://localhost:3000/delete/${hostedZoneId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await response.json();
       console.log(data);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-    
 
-  
-  
+  const HandleRecord = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/record?hostedZoneId=${hostedZoneId}`
+      );
+      const data = await response.json();
+      //   console.log(data)
+      setRecordStack(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -111,24 +129,18 @@ function Dashboard() {
     openModal();
   };
 
-  const deleteDomain = (index) => {
-    const updatedDomains = [...domains];
-    updatedDomains.splice(index, 1);
-    setDomains(updatedDomains);
-  };
-
   return (
     <div className="container">
       <h1>Domain and DNS Records Dashboard</h1>
 
       <input
-          type="text"
-          placeholder="Example.com"
-          value={newDomain}
-          onChange={(e) => setNewDomain(e.target.value)}
-        />
+        type="text"
+        placeholder="Example.com"
+        value={newDomain}
+        onChange={(e) => setNewDomain(e.target.value)}
+      />
 
-        <button onClick={handleAdd}>Add Domain</button>
+      <button onClick={handleAdd}>Add Domain</button>
       <table className="table">
         <thead>
           <tr>
@@ -141,16 +153,23 @@ function Dashboard() {
         <tbody>
           {domains.map((item, index) => (
             <tr key={index}>
-              <td>{item.Id.split('/').pop()}</td>
-              <td>{item.Name}</td>
+              <td>{item.Id.split("/").pop()}</td>
+              <td><Link to={`/records/${item.Id.split("/").pop()}`}>{item.Name}</Link> </td>
               <td>{item.CallerReference}</td>
               <td>{item.recordType}</td>
               <td>
                 <button onClick={() => editDomain(index)}>Edit</button>
-                <button onClick={() =>deleteHostedZone(item.Id.split('/').pop())}>Delete</button>
+                <button
+                  onClick={() => deleteHostedZone(item.Id.split("/").pop())}
+                >
+                  Delete
+                </button>
+                
+                
               </td>
             </tr>
           ))}
+          
         </tbody>
       </table>
 
