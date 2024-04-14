@@ -1,10 +1,16 @@
-import React ,{ useState }from 'react';
-import { Link } from 'react-router-dom';
+import React ,{ useState , useEffect }from 'react';
 
 function Records({data}) {
+
+
+  useEffect(() => {
+    handleRecord ();
+  }, []);
+
+  
     console.log(data)
     const [recordstack, setRecordStack] = useState([]);
-    const hostedZoneId = 'Z04339233DVBHPD2PI7BG'; 
+    const hostedZoneId = data; 
     
       const handleRecord = async () => {
        
@@ -23,9 +29,6 @@ function Records({data}) {
 
 
     <div>
-      <h2>Records</h2>
-      <button onClick={handleRecord}>fetch record</button>
-
       <table className="table">
         <thead>
           <tr>
@@ -44,7 +47,7 @@ function Records({data}) {
           ))}
         </tbody>
       </table>
-      <Link to={`/records/${hostedZoneId }`}>View Details</Link> 
+      {/* <Link to={`/records/${hostedZoneId }`}>View Details</Link>  */}
     </div>
   );
 }

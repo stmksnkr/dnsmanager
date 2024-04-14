@@ -3,15 +3,13 @@ import Modal from "react-modal";
 import { Link} from "react-router-dom";
 
 function Dashboard() {
-  const [recordstack, setRecordStack] = useState([]);
+  
   const [domains, setDomains] = useState([]);
   const [newDomain, setNewDomain] = useState("");
   const [newDNSRecord, setNewDNSRecord] = useState("");
   const [recordType, setRecordType] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
-
-  const hostedZoneId = 'Z04339233DVBHPD2PI7BG'; 
   
   useEffect(() => {
     fetchData();
@@ -69,18 +67,6 @@ function Dashboard() {
     }
   };
 
-  const HandleRecord = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/record?hostedZoneId=${hostedZoneId}`
-      );
-      const data = await response.json();
-      //   console.log(data)
-      setRecordStack(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   const openModal = () => {
     setIsModalOpen(true);
