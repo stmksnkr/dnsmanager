@@ -12,8 +12,9 @@ function App() {
     
     <div className="App">
       <Routes>
+      
       <Route exact path="/" element={<Dashboard/>} />
-      <Route exact path="/records/:recordId" element={<RecordsPage/>} />
+      <Route exact path="/records/:domain/:recordId" element={<RecordsPage/>} />
       </Routes>
     
     

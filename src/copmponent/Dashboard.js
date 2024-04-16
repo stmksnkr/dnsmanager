@@ -142,7 +142,7 @@ function Dashboard() {
           {domains.map((item, index) => (
             <tr key={index}>
               <td>{item.Id.split("/").pop()}</td>
-              <td><Link to={`/records/${item.Id.split("/").pop()}`}>{item.Name}</Link> </td>
+              <td><Link to={`/records/${item.Name}/${item.Id.split("/").pop()}`}>{item.Name}</Link> </td>
               <td>{item.CallerReference}</td>
               <td>{item.recordType}</td>
               <td>
