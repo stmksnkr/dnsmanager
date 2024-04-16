@@ -18,7 +18,7 @@ const RecordsPage = () => {
   const handleRecord = async (hostedZoneId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/record?hostedZoneId=${hostedZoneId}`
+        `https://backend-dns.vercel.app/record?hostedZoneId=${hostedZoneId}`
       );
       const data = await response.json();
       setRecordStack(data);
@@ -30,7 +30,7 @@ const RecordsPage = () => {
   const AddRecord = async (hostedZoneId) => {
     try {
 
-      const response = await fetch( `http://localhost:3001/dns/${hostedZoneId}`, {
+      const response = await fetch( `https://backend-dns.vercel.app/dns/${hostedZoneId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
