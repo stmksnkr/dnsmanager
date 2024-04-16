@@ -4,8 +4,9 @@ const RecordsPage = () => {
   const hostedZoneId = window.location.pathname.split("/")[3];
   const domainInit= window.location.pathname.split("/")[2];
   
+
   const [recordstack, setRecordStack] = useState([]);
-  const [SubDomain, setSubDomain] = useState([]);
+  const [SubDomain, setSubDomain] = useState('');
   const [DNSRecord, setNewDNSRecord] = useState([]);
   const [RecordType, setRecordType] = useState("");
   const [isDomainAdded, setIsDomainAdded] = useState(false);
@@ -18,7 +19,7 @@ const RecordsPage = () => {
   const handleRecord = async (hostedZoneId) => {
     try {
       const response = await fetch(
-        `https://backend-dns.vercel.app/record?hostedZoneId=${hostedZoneId}`
+        `http://localhost:3001/record?hostedZoneId=${hostedZoneId}`
       );
       const data = await response.json();
       setRecordStack(data);
@@ -30,7 +31,7 @@ const RecordsPage = () => {
   const AddRecord = async (hostedZoneId) => {
     try {
 
-      const response = await fetch( `https://backend-dns.vercel.app/dns/${hostedZoneId}`, {
+      const response = await fetch( `http://localhost:3001/dns/${hostedZoneId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
