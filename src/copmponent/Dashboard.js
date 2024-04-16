@@ -20,7 +20,7 @@ function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/hostedzones");
+      const response = await fetch("https://dnsmanager-five.vercel.app/hostedzones");
       const data = await response.json();
       // console.log(data)
       setDomains(data);
@@ -31,7 +31,7 @@ function Dashboard() {
 
   const handleAdd = async () => {
     try {
-      const response = await fetch("http://localhost:3001/create", {
+      const response = await fetch("https://dnsmanager-five.vercel.app/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ function Dashboard() {
   const deleteHostedZone = async (hostedZoneId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/delete/${hostedZoneId}`,
+        `https://dnsmanager-five.vercel.app/delete/${hostedZoneId}`,
         {
           method: "DELETE",
         }
